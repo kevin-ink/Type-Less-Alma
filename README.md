@@ -4,8 +4,6 @@
 Just a little extension to improve the quality of life in using ExLibris Alma.
 
 
-
-
 ## Features
 
 - Support for barcode scanning of chromebooks

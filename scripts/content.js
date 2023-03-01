@@ -21,7 +21,5 @@ function interceptKey(e) {
             button = document.getElementById("checkoutpatronworkspaceok");
             button.click();
         }
-        
     }
-
 }
