@@ -10,7 +10,8 @@
             "js": ["scripts/content.js"],
             "matches": [
                 "https://ucla.alma.exlibrisgroup.com/*"
-            ]
+            ],
+            "run_at": "document_end"
         }
     ]
 }
