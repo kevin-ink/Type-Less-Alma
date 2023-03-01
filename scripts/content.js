@@ -19,6 +19,7 @@ function interceptKey(e) {
         }
         else {
             button = document.getElementById("checkoutpatronworkspaceok");
+            button.click();
         }
         
     }
