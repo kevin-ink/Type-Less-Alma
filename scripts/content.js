@@ -1,8 +1,7 @@
 window.addEventListener("load", (event) => {
-    var jsInitChecktimer = setInterval (checkForJS_Finish, 111);
+    var jsInitChecktimer = setInterval (checkForJS_Finish, 100);
     function checkForJS_Finish () {
         if (document.getElementById("pageBeanitemLoanParametersbarcode")) {
-            clearInterval (jsInitChecktimer);
             input = document.getElementById("pageBeanitemLoanParametersbarcode");
             input.addEventListener("keydown", interceptKey);
         }
@@ -15,7 +14,13 @@ function interceptKey(e) {
         e.preventDefault();
         input.value = input.value.replace("-","");
         button = document.getElementById("fulfillment_dischargeok");
-        button.click();
+        if (button) {
+            button.click();
+        }
+        else {
+            button = document.getElementById("checkoutpatronworkspaceok");
+        }
+        
     }
 
 }
