@@ -3,7 +3,7 @@
 
 Just a little extension to improve the quality of life in using ExLibris Alma.
 
-**Note:** When your browser asks to turn off developer mode, do not do so and tell it to remind you in X weeks.==
+**Note:** When your browser asks to turn off developer mode, do not do so and tell it to remind you in X weeks.
 
 
 ## Features
