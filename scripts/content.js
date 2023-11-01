@@ -17,7 +17,9 @@ const pageTitles = [
 ]
 
 window.addEventListener("load", () => {
+    console.log("hey");
     const pageTitleElement = document.querySelector(".pageTitle");
+    console.log(pageTitleElement);
     if (pageTitleElement && pageTitles.includes(pageTitleElement.textContent))
     {
         let checkForElem = setInterval(() => {
