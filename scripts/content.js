@@ -1,14 +1,9 @@
 window.addEventListener("load", () => {
     let checkForElem = setInterval(() => {
-        const input = document.getElementById("pageBeanitemLoanParametersbarcode");
+        const input = document.getElementById("pageBeanbarcode");
         if (input) {
-            console.log("got");
             input.addEventListener("keydown", interceptKey);
             clearInterval(checkForElem);
-        }
-        else 
-        {
-            console.log("no go");
         }
     }, 100);
 });
