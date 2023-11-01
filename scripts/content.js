@@ -1,8 +1,11 @@
-window.addEventListener("load", (event) => {
-    const input = document.getElementById("pageBeanitemLoanParametersbarcode");
-    if (input) {
-        input.addEventListener("keydown", interceptKey);
-    }
+window.addEventListener("load", () => {
+    let checkForElem = setInterval(() => {
+        const input = document.getElementById("pageBeanitemLoanParametersbarcode");
+        if (input) {
+            input.addEventListener("keydown", interceptKey);
+            clearInterval(checkForElem);
+        }
+    }, 100);
 });
 
 const buttonIds = [
