@@ -17,6 +17,7 @@ const buttonIds = [
 function interceptKey(e) {
     let regex = /^CBK-\d{3}$/;
     let input = e.target;
+    console.log(input);
     if (e.key == "Enter" && regex.test(input.value)) {
         e.preventDefault();
         input.value = input.value.replace("-","");
