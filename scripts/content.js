@@ -2,8 +2,13 @@ window.addEventListener("load", () => {
     let checkForElem = setInterval(() => {
         const input = document.getElementById("pageBeanitemLoanParametersbarcode");
         if (input) {
+            console.log("got");
             input.addEventListener("keydown", interceptKey);
             clearInterval(checkForElem);
+        }
+        else 
+        {
+            console.log("no go");
         }
     }, 100);
 });
