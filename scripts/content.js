@@ -1,18 +1,36 @@
-window.addEventListener("load", () => {
-    let checkForElem = setInterval(() => {
-        const input = document.getElementById("pageBeanbarcode");
-        if (input) {
-            input.addEventListener("keydown", interceptKey);
-            clearInterval(checkForElem);
-        }
-    }, 100);
-});
-
 const buttonIds = [
     "fulfillment_dischargeok",
     "checkoutpatronworkspaceok",
     "requestscan_in_interfaceformok"
 ];
+
+const barcodeFields = [
+    "pageBeanbarcode",
+    "pageBeanitemLoanParametersbarcode",
+    "pageBeanscannedRequestId"
+]
+
+const pageTitles = [
+    "Manage Item Returns",
+    "Scan In Items",
+    "Patron Services"
+]
+
+window.addEventListener("load", () => {
+    const pageTitleElement = document.querySelector(".pageTitle");
+    if (pageTitleElement && pageTitles.includes(pageTitleElement.textContent))
+    {
+        let checkForElem = setInterval(() => {
+            for (const bf of barcodeFields) {
+                const barcodeField = document.getElementById(bf);
+                if (barcodeField) {
+                    barcodeField.addEventListener("keydown", interceptKey);
+                    clearInterval(checkForElem);
+                }
+            }
+        }, 100);
+    }
+});
 
 function interceptKey(e) {
     let regex = /^CBK-\d{3}$/;
