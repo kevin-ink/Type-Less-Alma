@@ -1,52 +1,76 @@
-const buttonIds = [
-    "fulfillment_dischargeok",
-    "checkoutpatronworkspaceok",
-    "requestscan_in_interfaceformok"
+let buttonIds;
+let barcodeFields;
+let pageTitle = "";
+let isObserving = false;
+
+// mutation function
+const mutationCallback = (mutationsList, observer) => {
+  for (let mutation of mutationsList) {
+    if (mutation.type === "childList") {
+      if (observer.customID == "barcodeObserver") {
+        for (const bf of barcodeFields) {
+          let targetElement = document.getElementById(bf);
+          if (targetElement) {
+            targetElement.addEventListener("keydown", interceptKey);
+            observer.disconnect();
+            return;
+          }
+        }
+      } else {
+        let pageTitleElem = document.querySelector(".pageTitle");
+        if (!pageTitleElem)
+        {
+          return;
+        }
+        if (
+          targetElement2.textContent != pageTitle
+        ) {
+          pageTitle = targetElement2.textContent;
+        }
+      }
+    }
+  }
+};
+
+// function to handle barcode input
+function interceptKey(e) {
+  let regex = /^CBK-\d{3}$/;
+  let input = e.target;
+  if (e.key == "Enter" && regex.test(input.value)) {
+    e.preventDefault();
+    input.value = input.value.replace("-", "");
+    for (const id of buttonIds) {
+      const button = document.getElementById(id);
+      if (button) {
+        button.click();
+        observer.observe(document.body, config);
+        isObserving = true;
+        return;
+      }
+    }
+  }
+}
+
+// observe
+const observer = new MutationObserver(mutationCallback);
+const observer2 = new MutationObserver(mutationCallback);
+const config = {
+  childList: true,
+  subtree: true,
+};
+observer.observe(document.body, config);
+observer.customID = "barcodeObserver";
+isObserving = true;
+observer2.observe(document.body, config);
+
+buttonIds = [
+  "fulfillment_dischargeok",
+  "checkoutpatronworkspaceok",
+  "requestscan_in_interfaceformok",
 ];
 
-const barcodeFields = [
-    "pageBeanbarcode",
-    "pageBeanitemLoanParametersbarcode",
-    "pageBeanscannedRequestId"
-]
-
-const pageTitles = [
-    "Manage Item Returns",
-    "Scan In Items",
-    "Patron Services"
-]
-
-window.addEventListener("load", () => {
-    console.log("hey");
-    const pageTitleElement = document.querySelector(".pageTitle");
-    console.log(pageTitleElement);
-    if (pageTitleElement && pageTitles.includes(pageTitleElement.textContent))
-    {
-        let checkForElem = setInterval(() => {
-            for (const bf of barcodeFields) {
-                const barcodeField = document.getElementById(bf);
-                if (barcodeField) {
-                    barcodeField.addEventListener("keydown", interceptKey);
-                    clearInterval(checkForElem);
-                }
-            }
-        }, 100);
-    }
-});
-
-function interceptKey(e) {
-    let regex = /^CBK-\d{3}$/;
-    let input = e.target;
-    console.log(input);
-    if (e.key == "Enter" && regex.test(input.value)) {
-        e.preventDefault();
-        input.value = input.value.replace("-","");
-        for (const id of buttonIds) {
-            const button = document.getElementById(id);
-            if (button) {
-              button.click();
-              return;
-            }
-        }
-    }
-}
+barcodeFields = [
+  "pageBeanbarcode",
+  "pageBeanitemLoanParametersbarcode",
+  "pageBeanscannedRequestId",
+];
