@@ -1,9 +1,50 @@
-body {
-    width: 10rem;
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
+body, div, h1, h2, p {
+    margin: 0;
+    padding: 0;
+    border: 0;
 }
 
-.popup-text {
-    color:black;
+body {
+    height: auto;
+    width: 128px;
+    line-height: 1;
+    background-color: transparent;
+}
+
+div {
+    background-color: white;
+    margin: 2px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    justify-content: center;
+    text-align: center;
+    border: 2px solid orange;
+    overflow: hidden;
+    padding: 6px;
+    font-size: 12px;
+}
+
+button 
+{
+    border: 1px solid black;
+    background: linear-gradient(45deg, #fceabb, #f8b500);
+    border-radius: 5px;
+    margin: 0;
+    padding: 5px;
+    width: auto;
+    font-size: 12px;
+}
+
+button:hover
+{
+    background: #f8b500;
+    border-width: 1.5px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+#version {
+    text-align: left;
+    font-size: 8px;
 }

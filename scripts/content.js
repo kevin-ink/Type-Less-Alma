@@ -9,8 +9,10 @@ const mutationCallback = (mutationsList, observer) => {
         let targetElement = document.getElementById(bf);
         if (targetElement) {
           targetElement.addEventListener("keydown", interceptKey);
-          const getMenuButton = document.querySelector('button[aria-label="Fullfillment"]');
-          getMenuButton.addEventListener('click', handleClick);
+          const getMenuButton = document.querySelector(
+            'button[aria-label="Fullfillment"]'
+          );
+          getMenuButton.addEventListener("click", handleClick);
           observer.disconnect();
           return;
         }
@@ -40,7 +42,7 @@ function interceptKey(e) {
 //
 function handleClick(e) {
   observer.observe(document.body, config);
-  e.target.removeEventListener('click', handleClick);
+  e.target.removeEventListener("click", handleClick);
 }
 
 // observe

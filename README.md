@@ -1,6 +1,6 @@
 # Type Less Alma
 
-Hotfix for barcode scanning problem for the UCLA Sciences Libraries.
+Hotfix for chromebook barcode scanning problem.
 
 ## Features
 
