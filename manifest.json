@@ -1,17 +1,22 @@
 {
-    "manifest_version": 3,
-    "name": "Type Less Alma",
-    "version": "1.3",
-    "action": {
-        "default_popup": "popup.html"
-    },
-    "content_scripts": [
-        {
-            "js": ["scripts/content.js"],
-            "matches": [
-                "https://ucla.alma.exlibrisgroup.com/*"
-            ],
-            "run_at": "document_end"
-        }
-    ]
+  "manifest_version": 3,
+  "name": "Type Less Alma",
+  "version": "1.5",
+  "description": "Hotfix for the Alma barcode scanning problem.",
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "content_scripts": [
+    {
+      "js": ["scripts/content.js"],
+      "matches": ["https://ucla.alma.exlibrisgroup.com/*"],
+      "run_at": "document_end"
+    }
+  ],
+  "permissions": ["activeTab"],
+  "icons": {
+    "48": "icon.png",
+    "16": "icon16.png"
+  },
+  "default_locale": "en"
 }
