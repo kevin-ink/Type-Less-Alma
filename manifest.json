@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Type Less Alma",
-  "version": "2.1",
+  "version": "1.4",
   "description": "Hotfix for the Alma barcode scanning problem.",
   "action": {
     "default_popup": "popup.html"
