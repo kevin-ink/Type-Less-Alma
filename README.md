@@ -2,12 +2,11 @@
 # Type Less Alma
 
 Hotfix for chromebook barcode scanning problem.
-[Full Guide](https://tinyurl.com/nw6pdkru)
 
 ## Features
 
 - Support for barcode scanning of chromebooks
-- More to come like automating TRS...
+- Auto-converting military time to 12-hour format (WIP)
 
 ## Support
 

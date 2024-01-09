@@ -1,7 +1,6 @@
 let buttonIds;
 let barcodeFields;
 
-// mutation function
 const mutationCallback = (mutationsList, observer) => {
   for (let mutation of mutationsList) {
     if (mutation.type === "childList") {
@@ -9,9 +8,14 @@ const mutationCallback = (mutationsList, observer) => {
         let targetElement = document.getElementById(bf);
         if (targetElement) {
           targetElement.addEventListener("keydown", interceptKey);
-          const getMenuButton = document.querySelector(
-            'button[aria-label="Fullfillment"]'
+          getMenuButton = document.querySelector(
+            'button[aria-label="Fulfillment"]'
           );
+          while (!getMenuButton) {
+            getMenuButton = document.querySelector(
+              'button[aria-label="Fulfillment"]'
+            );
+          }
           getMenuButton.addEventListener("click", handleClick);
           observer.disconnect();
           return;
@@ -39,18 +43,19 @@ function interceptKey(e) {
   }
 }
 
-//
+// handle switching pages in Alma
 function handleClick(e) {
   observer.observe(document.body, config);
   e.target.removeEventListener("click", handleClick);
 }
 
-// observe
-const observer = new MutationObserver(mutationCallback);
 const config = {
   childList: true,
   subtree: true,
 };
+
+// observer setup
+const observer = new MutationObserver(mutationCallback);
 observer.observe(document.body, config);
 
 buttonIds = [
