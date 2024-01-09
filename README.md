@@ -6,7 +6,7 @@ Hotfix for chromebook barcode scanning problem.
 ## Features
 
 - Support for barcode scanning of chromebooks
-- Auto-converting military time to 12-hour format (WIP)
+- Auto-converting military time to 12-hour format
 
 ## Support
 
