@@ -2,7 +2,14 @@
 // to start search from
 const elemIDS = ["loanList", "returnList"];
 
+// setup
 let militaryTime = false;
+chrome.storage.local.get(["key"]).then((result) => {
+  if (result.key) {
+    militaryTime = result.key;
+    searchAndConvert();
+  }
+});
 
 // listens for urlchange message from background.js
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
@@ -10,12 +17,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     if (militaryTime) {
       return;
     }
-    elemIDS.forEach((id) => {
-      let element = document.getElementById(id);
-      if (element) {
-        searchAndConvert(element);
-      }
-    });
+    searchAndConvert();
   }
   if (request.message === "timeToggle") {
     militaryTime = request.value;
@@ -36,8 +38,17 @@ function convertMilitaryTime(text) {
   );
 }
 
+function searchAndConvert() {
+  elemIDS.forEach((id) => {
+    let element = document.getElementById(id);
+    if (element) {
+      searchAndConvert_helper(element);
+    }
+  });
+}
+
 // recursive approach to converting all descendant nodes
-function searchAndConvert(e) {
+function searchAndConvert_helper(e) {
   if (e.hasChildNodes()) {
     let children = e.childNodes;
     for (const node of children) {
