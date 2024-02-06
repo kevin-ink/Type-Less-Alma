@@ -17,13 +17,10 @@ document.addEventListener("DOMContentLoaded", function () {
         action: "timeToggle",
         value: e.target.checked,
       };
-      chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-        if (tabs[0]) {
-          chrome.tabs.sendMessage(tabs[0].id, message);
-      }})
+      chrome.runtime.sendMessage(message);
     });
     // get locally stored toggle value
-    chrome.storage.local.get(["key"]).then((result) => {
+    chrome.storage.local.get(["militaryTime"]).then((result) => {
       if (result.key) {
         btn.checked = result.key;
       }

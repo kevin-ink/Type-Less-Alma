@@ -4,7 +4,7 @@ const elemIDS = ["loanList", "returnList"];
 
 // setup
 let militaryTime = false;
-chrome.storage.local.get(["key"]).then((result) => {
+chrome.storage.local.get(["militaryTime"]).then((result) => {
   if (result.key) {
     militaryTime = result.key;
     searchAndConvert();
@@ -14,9 +14,6 @@ chrome.storage.local.get(["key"]).then((result) => {
 // listens for urlchange message from background.js
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   if (request.message === "urlchange") {
-    if (militaryTime) {
-      return;
-    }
     searchAndConvert();
   }
   if (request.message === "timeToggle") {

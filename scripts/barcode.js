@@ -12,17 +12,14 @@ const buttonIds = [
   "requestscan_in_interfaceformok",
 ];
 
-// listens for urlchange message from background.js
-chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
-  if (request.message === "urlchange") {
-    for (bf of barcodeFields) {
-      let targetElement = document.getElementById(bf);
-      if (targetElement) {
-        targetElement.addEventListener("keydown", interceptKey);
-      }
+function setupBarcodeReplacement() {
+  for (bf of barcodeFields) {
+    let elem = document.getElementById(bf);
+    if (elem) {
+      elem.addEventListener("keydown", interceptKey);
     }
   }
-});
+}
 
 // function to handle barcode input
 function interceptKey(e) {
@@ -39,3 +36,20 @@ function interceptKey(e) {
     }
   }
 }
+
+// listens for urlchange message from background.js
+chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
+  if (request.message === "urlchange") {
+    setupBarcodeReplacement();
+  }
+});
+
+// first time loading page
+chrome.runtime.sendMessage({ message: "contentScriptLoaded" });
+window.addEventListener('popstate', function() {
+  setupBarcodeReplacement();
+});
+
+window.addEventListener('hashchange', function() {
+  setupBarcodeReplacement();
+});
