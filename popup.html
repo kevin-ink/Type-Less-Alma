@@ -14,12 +14,19 @@
   <body>
     <div>
       <p>Extension enabled.</p>
-      <p>
+      <p style="color: orange;">
         <em><b>Happy scanning!</b></em>
       </p>
-      <p style="font-size: 8px">
+      <p style="font-size: 10px">
         <b>Reload Alma page if you have just installed the extension.</b>
       </p>
+      <div id="formatToggle">
+        <p style="font-weight: bold;">12HR</p>
+        <label class="switch">
+          <input type="checkbox" id="toggle">
+          <span class="slider round"></span>
+        </label>
+      </div>
       <button id="getSrc">source code</button>
       <p id="version"></p>
     </div>
