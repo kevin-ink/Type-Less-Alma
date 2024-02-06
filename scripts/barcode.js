@@ -1,29 +1,28 @@
-let buttonIds;
-let barcodeFields;
+// barcodes that can be matched
+const barcodeFields = [
+  "pageBeanbarcode",
+  "pageBeanitemLoanParametersbarcode",
+  "pageBeanscannedRequestId",
+];
 
-const mutationCallback = (mutationsList, observer) => {
-  for (let mutation of mutationsList) {
-    if (mutation.type === "childList") {
-      for (const bf of barcodeFields) {
-        let targetElement = document.getElementById(bf);
-        if (targetElement) {
-          targetElement.addEventListener("keydown", interceptKey);
-          getMenuButton = document.querySelector(
-            'button[aria-label="Fulfillment"]'
-          );
-          while (!getMenuButton) {
-            getMenuButton = document.querySelector(
-              'button[aria-label="Fulfillment"]'
-            );
-          }
-          getMenuButton.addEventListener("click", handleClick);
-          observer.disconnect();
-          return;
-        }
+// buttons that can be clicked by extension
+const buttonIds = [
+  "fulfillment_dischargeok",
+  "checkoutpatronworkspaceok",
+  "requestscan_in_interfaceformok",
+];
+
+// listens for urlchange message from background.js
+chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
+  if (request.message === "urlchange") {
+    for (bf of barcodeFields) {
+      let targetElement = document.getElementById(bf);
+      if (targetElement) {
+        targetElement.addEventListener("keydown", interceptKey);
       }
     }
   }
-};
+});
 
 // function to handle barcode input
 function interceptKey(e) {
@@ -36,36 +35,7 @@ function interceptKey(e) {
       const button = document.getElementById(id);
       if (button) {
         button.click();
-        observer.observe(document.body, config);
-        return;
       }
     }
   }
 }
-
-// handle switching pages in Alma
-function handleClick(e) {
-  observer.observe(document.body, config);
-  e.target.removeEventListener("click", handleClick);
-}
-
-const config = {
-  childList: true,
-  subtree: true,
-};
-
-// observer setup
-const observer = new MutationObserver(mutationCallback);
-observer.observe(document.body, config);
-
-buttonIds = [
-  "fulfillment_dischargeok",
-  "checkoutpatronworkspaceok",
-  "requestscan_in_interfaceformok",
-];
-
-barcodeFields = [
-  "pageBeanbarcode",
-  "pageBeanitemLoanParametersbarcode",
-  "pageBeanscannedRequestId",
-];
