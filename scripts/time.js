@@ -2,23 +2,26 @@
 // to start search from
 const elemIDS = ["loanList", "returnList"];
 
+function getTimePref() {
+  chrome.storage.local.get(["militaryTime"]).then((result) => {
+    if (result.militaryTime) {
+      militaryTime = result.militaryTime;
+      searchAndConvert();
+    }
+  });
+}
+
 // setup
 let militaryTime = false;
-chrome.storage.local.get(["militaryTime"]).then((result) => {
-  if (result.key) {
-    militaryTime = result.key;
-    searchAndConvert();
-  }
-});
+getTimePref();
 
 // listens for urlchange message from background.js
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   if (request.message === "urlchange") {
     searchAndConvert();
   }
-  if (request.message === "timeToggle") {
-    militaryTime = request.value;
-    chrome.storage.local.set({ 'militaryTime': request.value})
+  if (request.action === "timeToggle") {
+    getTimePref();
   }
 });
 
@@ -42,7 +45,7 @@ function convertToMilitaryTime(text) {
     function (match, hours, minutes, suffix) {
       hours = parseInt(hours);
       minutes = parseInt(minutes);
-      
+
       if (suffix.toLowerCase() === "pm" && hours !== 12) {
         hours += 12;
       } else if (suffix.toLowerCase() === "am" && hours === 12) {
@@ -74,9 +77,7 @@ function searchAndConvert_helper(e) {
       if (node.nodeType === Node.TEXT_NODE) {
         if (militaryTime) {
           node.nodeValue = convertMilitaryTime(node.nodeValue);
-        }
-        else
-        {
+        } else {
           node.nodeValue = convertToMilitaryTime(node.nodeValue);
         }
       }

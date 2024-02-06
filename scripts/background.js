@@ -7,25 +7,23 @@ chrome.runtime.onMessage.addListener(function (message, sender) {
   }
 
   // forward popup's message to content scripted page
-  if (message.message === "timeToggle") {
+  if (message.action === "timeToggle") {
     for (tabID of tabsWithContentScript) {
       chrome.tabs.sendMessage(tabId, message);
     }
   }
 });
 
-
-
 chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
   if (tabsWithContentScript.has(tabId)) {
     chrome.tabs.sendMessage(tabId, {
-      message: "urlchange"
+      message: "urlchange",
     });
   }
 });
 
 chrome.runtime.onInstalled.addListener((details) => {
-  if (details.reason === 'install') {
-      chrome.storage.local.set({'militaryTime': false})
+  if (details.reason === "install") {
+    chrome.storage.local.set({ militaryTime: false });
   }
 });

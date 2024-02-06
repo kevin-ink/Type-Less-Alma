@@ -46,10 +46,9 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
 
 // first time loading page
 chrome.runtime.sendMessage({ message: "contentScriptLoaded" });
-window.addEventListener('popstate', function() {
+window.addEventListener("popstate", function () {
   setupBarcodeReplacement();
 });
-
-window.addEventListener('hashchange', function() {
+window.addEventListener("hashchange", function () {
   setupBarcodeReplacement();
 });

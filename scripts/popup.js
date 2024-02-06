@@ -12,18 +12,20 @@ document.addEventListener("DOMContentLoaded", function () {
   // and notify time.js
   btn = document.getElementById("toggle");
   if (btn) {
-    btn.addEventListener("change", (e) => {
-      const message = {
-        action: "timeToggle",
-        value: e.target.checked,
-      };
-      chrome.runtime.sendMessage(message);
-    });
     // get locally stored toggle value
     chrome.storage.local.get(["militaryTime"]).then((result) => {
-      if (result.key) {
-        btn.checked = result.key;
+      if (result.militaryTime) {
+        btn.checked = result.militaryTime;
       }
+    });
+    // watch out for change to toggle
+    btn.addEventListener("change", (e) => {
+      const isChecked = e.target.checked;
+      const message = {
+        action: "timeToggle",
+      };
+      chrome.storage.local.set({ militaryTime: isChecked });
+      chrome.runtime.sendMessage(message);
     });
   }
   // fetch version from manifest and update popup
