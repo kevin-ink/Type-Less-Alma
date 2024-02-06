@@ -21,6 +21,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   }
   if (request.message === "timeToggle") {
     militaryTime = request.value;
+    chrome.storage.local.set({ 'militaryTime': request.value})
   }
 });
 
@@ -34,6 +35,27 @@ function convertMilitaryTime(text) {
       let suffix = hours >= 12 ? "PM" : "AM";
       hours = hours % 12 || 12;
       return hours + ":" + minutes + " " + suffix;
+    }
+  );
+}
+
+function convertToMilitaryTime(text) {
+  return text.replace(
+    /\b(\d{1,2}):(\d{2})\s?(AM|PM)\b/gi,
+    function (match, hours, minutes, suffix) {
+      hours = parseInt(hours);
+      minutes = parseInt(minutes);
+      
+      if (suffix.toLowerCase() === "pm" && hours !== 12) {
+        hours += 12;
+      } else if (suffix.toLowerCase() === "am" && hours === 12) {
+        hours = 0;
+      }
+
+      const formattedHours = (hours < 10 ? "0" : "") + hours;
+      const formattedMinutes = (minutes < 10 ? "0" : "") + minutes;
+
+      return formattedHours + ":" + formattedMinutes;
     }
   );
 }
@@ -53,9 +75,15 @@ function searchAndConvert_helper(e) {
     let children = e.childNodes;
     for (const node of children) {
       if (node.nodeType === Node.TEXT_NODE) {
-        node.nodeValue = convertMilitaryTime(node.nodeValue);
+        if (militaryTime) {
+          node.nodeValue = convertMilitaryTime(node.nodeValue);
+        }
+        else
+        {
+          node.nodeValue = convertToMilitaryTime(node.nodeValue);
+        }
       }
-      searchAndConvert(node);
+      searchAndConvert_helper(node);
     }
   }
 }

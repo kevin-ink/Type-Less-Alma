@@ -17,7 +17,10 @@ document.addEventListener("DOMContentLoaded", function () {
         action: "timeToggle",
         value: e.target.checked,
       };
-      chrome.runtime.sendMessage(message);
+      chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+        if (tabs[0]) {
+          chrome.tabs.sendMessage(tabs[0].id, message);
+      }})
     });
     // get locally stored toggle value
     chrome.storage.local.get(["key"]).then((result) => {
